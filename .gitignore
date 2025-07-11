@@ -1,0 +1,39 @@
+# Rasa models (you can retrain these)
+models/
+
+.rasa
+
+# Python virtual environment
+venv/
+.env/
+env/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pdb
+*.egg-info/
+
+# Logs
+*.log
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Jupyter Notebooks checkpoints (if used)
+.ipynb_checkpoints/
+
+# Pytest cache
+.cache/
+
+# Poetry virtualenvs (if you're using poetry and not in-project venv)
+.poetry/
+
+# dotenv files (optional)
+.env

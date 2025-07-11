@@ -1,0 +1,27 @@
+version: "3.1"
+
+slots:
+  product_type:
+    type: text
+    mappings:
+      - type: from_llm
+
+responses:
+  utter_ask_product_type:
+    - text: "What kind of product are you looking for? (e.g., phone, laptop)"
+
+  utter_free_chitchat_response:
+    - text: "I'm here to help you find the right tech! What kind of product are you interested in?"
+      metadata:
+        rephrase: True
+        rephrase_prompt: |
+          You are an AI assistant that helps users find and recommend tech products.
+          The user is making small talk, and the assistant should respond in a friendly way while staying on topic.
+          Context:
+          {{history}}
+          {{current_input}}
+          Suggested AI Response:
+
+
+actions:
+  - action_recommend_product

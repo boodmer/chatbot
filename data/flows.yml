@@ -1,0 +1,9 @@
+flows:
+  recommend_product:
+    description: Recommend a product type (e.g., phone, laptop) using fake data
+    steps:
+      - collect: product_type
+        description: "Which product category are you interested in (phone, laptop, etc.)?"
+      - action: action_recommend_product
+      - set_slots:
+          - product_type: null
