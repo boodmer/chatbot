@@ -1,9 +1,29 @@
 flows:
-  recommend_product:
-    description: Recommend a product type (e.g., phone, laptop) using fake data
+  recommend_bike:
+    description: Gợi ý xe đạp dựa trên loại xe, ngân sách, hoặc tên sản phẩm
+
     steps:
-      - collect: product_type
-        description: "Which product category are you interested in (phone, laptop, etc.)?"
-      - action: action_recommend_product
+      - collect: category
+        description: Loại xe bạn đang tìm (xe đạp đua, địa hình, trẻ em,...)
+
+      - collect: budget
+        description: >
+          Hỏi người dùng về ngân sách họ có thể chi cho xe đạp. Có thể nhập số trực tiếp 
+          (ví dụ: 5000000) hoặc dùng đơn vị tiếng Việt như “5 triệu”, “dưới 10 triệu”, 
+          “trên 7 triệu” v.v. Hệ thống sẽ chuẩn hóa dữ liệu về định dạng số
+      # - collect: name
+      #   description: Tên xe cụ thể nếu có
+
+      - action: action_recommend_bicycle
+
       - set_slots:
-          - product_type: null
+          - category: null
+          - budget: null
+          - name: null
+          - recommended_products: null
+
+  ask_bike_detail:
+    description: Người dùng xác nhận muốn biết thêm thông tin về sản phẩm
+    name: pattern affirm after recommend
+    steps:
+      - action: action_show_category_detail

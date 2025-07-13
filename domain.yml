@@ -1,27 +1,56 @@
 version: "3.1"
 
+
 slots:
-  product_type:
+  category:
     type: text
     mappings:
       - type: from_llm
 
+  budget:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+
+  name:
+    type: text
+    mappings:
+      - type: from_llm
+
+  recommended_products:
+    type: text
+    mappings:
+      - type: controlled
+
 responses:
-  utter_ask_product_type:
-    - text: "What kind of product are you looking for? (e.g., phone, laptop)"
+  utter_ask_category:
+    - text: "Bạn đang tìm loại xe đạp nào? (ví dụ: xe đạp đua, xe địa hình, xe trẻ em)"
+
+  utter_ask_budget:
+    - text: Ngân sách của bạn là bao nhiêu?
+
+  utter_ask_name:
+    - text: "Bạn có đang tìm tên xe cụ thể không?"
+
+  utter_invalid_budget:
+    - text: Vui lòng nhập ngân sách hợp lệ.
 
   utter_free_chitchat_response:
-    - text: "I'm here to help you find the right tech! What kind of product are you interested in?"
-      metadata:
-        rephrase: True
-        rephrase_prompt: |
-          You are an AI assistant that helps users find and recommend tech products.
-          The user is making small talk, and the assistant should respond in a friendly way while staying on topic.
-          Context:
-          {{history}}
-          {{current_input}}
-          Suggested AI Response:
+  - text: >
+      Mình luôn sẵn sàng hỗ trợ bạn! Nếu bạn cần tìm xe đạp, hãy cho mình biết loại xe hoặc ngân sách nhé 😊
+    metadata:
+      rephrase_prompt: |
+        Bạn là trợ lý AI chuyên hỗ trợ người dùng mua xe đạp. Người dùng đang nói chuyện vu vơ không liên quan. Phản hồi thân thiện nhưng hướng người dùng trở lại mục tiêu chính.
 
+  utter_knowledge_search_response:
+  - text: >
+      Đây là thông tin mình tìm được. Bạn muốn biết thêm gì về loại xe nào?
 
 actions:
-  - action_recommend_product
+  - action_recommend_bicycle
+  - action_show_category_detail
+  - utter_ask_category
+  - utter_ask_budget
+  - utter_ask_name
+  - utter_invalid_budget

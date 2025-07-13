@@ -1,3 +1,15 @@
+intents:
+  - affirm
+
+patterns:
+  affirm:
+    - "có"
+    - "đúng rồi"
+    - "ok"
+    - "ừ"
+    - "vâng"
+    - "uh"
+
 flows:
   pattern_chitchat:
     description: Conversation repair flow for off-topic interactions that won't disrupt the main conversation. should not respond to greetings or anything else for which there is a flow defined
@@ -8,4 +20,4 @@ flows:
     description: Flow for handling knowledge-based questions
     name: pattern search
     steps:
-      - action: utter_free_chitchat_response
+      - action: utter_knowledge_search_response

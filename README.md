@@ -29,7 +29,24 @@ export RASA_PRO_LICENSE=your_license_key  # Windows PowerShell: $env:RASA_PRO_LI
 # 4. Install Rasa Pro
 pip install --upgrade pip
 pip install rasa-pro
+pip install -r requirements.txt
 
-# 5. Train and run the assistant
+# 5. Create .env File (Database Config)
+DB_HOST=your_host_here
+DB_USER=your_user_here
+DB_PASSWORD=your_password_here
+DB_NAME=your_db_name
+DB_PORT=3306
+
+# 5. Train the assistant
 rasa train
+
+# 6.1. Test with Rasa Inspect
 rasa inspect
+
+# 6.2. Running the Assistant
+rasa run --enable-api --cors "*" --debug
+
+# The assistant will be accessible at:
+http://localhost:5005
+
