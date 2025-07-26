@@ -89,7 +89,7 @@ class ActionRecommendBicycle(Action):
             cursor = conn.cursor(dictionary=True)
 
             query = """
-                SELECT name, price, description
+                SELECT id, name, price, description
                 FROM products
                 WHERE stock > 0
             """
@@ -133,7 +133,11 @@ class ActionRecommendBicycle(Action):
                 message = "Không tìm thấy sản phẩm nào phù hợp với yêu cầu của bạn."
             else:
                 message += "\n".join(
-                    [f"- {row['name']} ({row['price']:,} VND)" for row in results]
+                    [
+                        f'<p><a href="{os.getenv("APP_URL", "http://127.0.0.1:8000")}/details/{row["id"]}" target="_blank">'
+                        f'- {row["name"]} ({row["price"]:,} VND)</a></p>'
+                        for row in results
+                    ]
                 )
 
             dispatcher.utter_message(text=message)
