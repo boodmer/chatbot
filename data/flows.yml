@@ -4,13 +4,34 @@ flows:
 
     steps:
       - collect: category
-        description: Loại xe bạn đang tìm (xe đạp đua, địa hình, trẻ em,...)
+        description: >
+          Trích xuất loại xe đạp mà người dùng muốn mua trong câu nói của họ. 
+          Người dùng có thể đề cập đến loại xe cùng với ngân sách, giảm giá, hoặc tên sản phẩm. 
+          Ưu tiên xác định loại xe đạp cụ thể như:
+          - "xe đạp đua"
+          - "xe đạp địa hình"
+          - "xe thể thao đường phố"
+          - "xe đạp trẻ em"
+          
+          Ví dụ:
+          - "Tôi cần mua xe đạp trẻ em giá dưới 5 triệu" → category: "xe đạp trẻ em"
+          - "Có xe đạp đua nào giảm giá không?" → category: "xe đạp đua"
+          - "Tư vấn giúp xe địa hình khoảng 10 triệu" → category: "xe đạp địa hình"
+
+          Nếu không rõ loại xe, có thể chọn gần đúng. Không nên bỏ trống.
+        ask_before_filling: false
+
+      - collect: discount
+        description: >
+          Mức giảm giá mong muốn (ví dụ: "trên 20%", "ít nhất 30%").
+        ask_before_filling: false
 
       - collect: budget
         description: >
           Hỏi người dùng về ngân sách họ có thể chi cho xe đạp. Có thể nhập số trực tiếp 
           (ví dụ: 5000000) hoặc dùng đơn vị tiếng Việt như “5 triệu”, “dưới 10 triệu”, 
-          “trên 7 triệu” v.v. Hệ thống sẽ chuẩn hóa dữ liệu về định dạng số
+          “trên 7 triệu” v.v. Hệ thống sẽ chuẩn hóa dữ liệu về định dạng số.
+        ask_before_filling: false
       # - collect: name
       #   description: >
           # Tên sản phẩm cụ thể (ví dụ: "Giant Escape 3").
@@ -23,15 +44,19 @@ flows:
           - budget: null
           - name: null
           - recommended_products: null
+          - discount: null
 
   ask_bike_detail:
-    description: Người dùng xác nhận muốn biết thêm thông tin về sản phẩm
+    description: Người dùng muốn biết thêm thông tin về loại sản phẩm
     name: pattern affirm after recommend
     steps:
-      - collect: category
-        description: Loại xe bạn đang tìm (xe đạp đua, địa hình, trẻ em,...)
+      - collect: category_detail
+        description: >
+          Người dùng đang hỏi thêm thông tin về một loại xe đạp cụ thể, như "xe đạp đua", "xe địa hình", "xe trẻ em".
+          Trích xuất loại xe đạp mà người dùng quan tâm từ câu nói.
+
 
       - action: action_show_category_detail
       
       - set_slots:
-          - category: null
+          - category_detail: null

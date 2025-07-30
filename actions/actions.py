@@ -32,8 +32,30 @@ def normalize_category(category: str) -> Optional[str]:
         return "Xe đạp đua"
     return None
 
+def normalize_discount(text: str) -> Optional[Dict[str, Any]]:
+    if text == "__skip__":
+        return None
+    text = str(text).lower().strip()
+
+    match = re.search(r"(trên|dưới|từ)?\s*(\d+)\s*%?", text)
+    if match:
+        op_word = match.group(1) or ""
+        value = int(match.group(2))
+
+        if "trên" in op_word or "hơn" in op_word:
+            return {"operator": ">", "value": value}
+        elif "dưới" in op_word or "ít hơn" in op_word:
+            return {"operator": "<", "value": value}
+        elif "từ" in op_word:
+            return {"operator": ">=", "value": value}
+        else:
+            return {"operator": ">=", "value": value}  # fallback mặc định
+
+    return None
 
 def normalize_budget(text: str) -> Optional[Dict[str, Any]]:
+    if text == "__skip__":
+        return None
     text = str(text).lower().strip()
 
     cheap_threshold = 4000000
@@ -78,6 +100,7 @@ class ActionRecommendBicycle(Action):
 
         category = tracker.get_slot("category")
         budget = tracker.get_slot("budget")
+        discount = tracker.get_slot("discount")
         name = tracker.get_slot("name")
 
         if not category and not budget and not name:
@@ -119,6 +142,21 @@ class ActionRecommendBicycle(Action):
                     elif op == "~" and isinstance(val, tuple):
                         query += " AND price BETWEEN %s AND %s"
                         params.extend(val)
+
+            if discount:
+                norm_discount = normalize_discount(discount)
+                if norm_discount:
+                    op = norm_discount["operator"]
+                    val = norm_discount["value"]
+                    if op == ">":
+                        query += " AND discount > %s"
+                        params.append(val)
+                    elif op == "<":
+                        query += " AND discount < %s"
+                        params.append(val)
+                    elif op == ">=":
+                        query += " AND discount >= %s"
+                        params.append(val)
 
             if name:
                 query += " AND name LIKE %s"
@@ -162,7 +200,7 @@ class ActionShowCategoryDetail(Action):
         domain: DomainDict
     ) -> List[Dict[str, Any]]:
 
-        category = tracker.get_slot("category")
+        category = tracker.get_slot("category_detail")
         if not category:
             dispatcher.utter_message(text="Bạn muốn biết thêm thông tin về loại xe nào?")
             return []

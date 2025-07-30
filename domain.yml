@@ -4,14 +4,30 @@ version: "3.1"
 slots:
   category:
     type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+
+  category_detail:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_llm
+  
+  discount:
+    type: text
+    influence_conversation: true
+    initial_value: "__skip__"
     mappings:
       - type: from_llm
 
   budget:
     type: text
     influence_conversation: true
+    initial_value: "__skip__"
     mappings:
       - type: from_llm
+    
 
   name:
     type: text
@@ -27,8 +43,14 @@ responses:
   utter_ask_category:
     - text: "Bạn đang tìm loại xe đạp nào? (ví dụ: xe đạp đua, xe địa hình, xe trẻ em)"
 
+  utter_ask_category_detail :
+    - text: "Bạn muốn biết thêm thông tin về loại xe đạp nào? (ví dụ: xe đạp đua, xe địa hình, xe trẻ em)"
+
+  utter_ask_discount:
+    - text: "Bạn mong muốn mức giảm giá bao nhiêu phần trăm? (ví dụ: trên 20%)"
+
   utter_ask_budget:
-    - text: Ngân sách của bạn là bao nhiêu?
+    - text: "Ngân sách của bạn là bao nhiêu?"
 
   utter_ask_name:
     - text: "Bạn có đang tìm tên xe cụ thể không?"
@@ -52,5 +74,7 @@ actions:
   - action_show_category_detail
   - utter_ask_category
   - utter_ask_budget
+  - utter_ask_discount
   - utter_ask_name
   - utter_invalid_budget
+  - utter_can_do_something_else
