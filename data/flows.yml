@@ -39,12 +39,12 @@ flows:
 
       - action: action_recommend_bicycle
 
-      - set_slots:
-          - category: null
-          - budget: null
-          - name: null
-          - recommended_products: null
-          - discount: null
+      # - set_slots:
+      #     - category: null
+      #     - budget: null
+      #     - name: null
+      #     - recommended_products: null
+      #     - discount: null
 
   ask_bike_detail:
     description: Người dùng muốn biết thêm thông tin về loại sản phẩm

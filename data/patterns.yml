@@ -21,3 +21,10 @@ flows:
     name: pattern search
     steps:
       - action: utter_knowledge_search_response
+  pattern_completed:
+    description: This pattern completes the current flow and prompts the user, allowing them to immediately start a new request or switch to another flow without delay."
+    steps:  
+      - action: utter_can_do_something_else
+      - action: action_deactivate_loop   # End the active flow/pattern
+      - action: action_restart
+      - action: action_listen # Allow the user to start a new request
