@@ -60,3 +60,34 @@ flows:
       
       - set_slots:
           - category_detail: null
+
+  maintenance_status:
+    description: Người dùng muốn kiểm tra tình trạng bảo trì/sửa chữa xe đạp của tài khoản hiện tại.
+    steps:
+      - collect: maintenance_status
+        description: >
+          Trạng thái để lọc, chỉ nhận một trong 3 giá trị:
+          - "Đang xử lý"
+          - "Hoàn thành"
+          - "Hủy"
+          Nếu người dùng không đề cập, đặt "__skip__".
+        ask_before_filling: false
+
+      - action: action_check_maintenance_status
+  
+  order_status:
+    description: Người dùng muốn xem tình trạng đơn hàng
+    steps:
+      - collect: order_status
+        description: >
+          Trạng thái đơn hàng để lọc:
+          - "Chờ thanh toán"
+          - "Đang xử lý"
+          - "Đã giao"
+          - "Đã hủy"
+          - "Giao hàng"
+          - "Chờ xác nhận hủy"
+          Nếu người dùng không đề cập, giữ nguyên "__skip__".
+        ask_before_filling: false
+
+      - action: action_check_order_status

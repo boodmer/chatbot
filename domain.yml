@@ -39,6 +39,24 @@ slots:
     mappings:
       - type: controlled
 
+  maintenance_status:
+    type: text
+    influence_conversation: true
+    initial_value: "__skip__"
+    mappings:
+      - type: from_llm
+
+  order_status:
+    type: text
+    influence_conversation: true
+    initial_value: "__skip__"
+    mappings:
+      - type: from_llm
+
+  requested_slot:
+    type: any
+    influence_conversation: false
+
 responses:
   utter_ask_category:
     - text: "Bạn đang tìm loại xe đạp nào? (ví dụ: xe đạp đua, xe địa hình, xe trẻ em)"
@@ -72,6 +90,8 @@ responses:
 actions:
   - action_recommend_bicycle
   - action_show_category_detail
+  - action_check_maintenance_status
+  - action_check_order_status
   - utter_ask_category
   - utter_ask_budget
   - utter_ask_discount
