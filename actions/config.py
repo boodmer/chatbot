@@ -11,4 +11,3 @@ DB_CONFIG = {
 }
 
 APP_URL = os.getenv("APP_URL", "http://127.0.0.1:8000")
-MAINTENANCE_TABLE = os.getenv("MAINTENANCE_TABLE", "maintenance_requests")
