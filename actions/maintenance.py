@@ -4,10 +4,11 @@ from mysql.connector import Error
 from rasa_sdk import Action, Tracker
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.types import DomainDict
-from .config import DB_CONFIG, MAINTENANCE_TABLE
+from .config import DB_CONFIG
 from .utils import normalize_maintenance_status
 
 MAINTENANCE_TABLE = "maintenances"
+
 
 class ActionCheckMaintenanceStatus(Action):
     def name(self) -> str:
@@ -23,7 +24,8 @@ class ActionCheckMaintenanceStatus(Action):
         md = tracker.latest_message.get("metadata", {}) or {}
         user_id = md.get("user_id")
         if not user_id:
-            dispatcher.utter_message(text="Vui lòng đăng nhập để xem tình trạng bảo trì.")
+            dispatcher.utter_message(
+                text="Vui lòng đăng nhập để xem tình trạng bảo trì.")
             return []
 
         # lấy slot trạng thái (có thể là '__skip__' hoặc để trống)
@@ -51,7 +53,8 @@ class ActionCheckMaintenanceStatus(Action):
             rows = cursor.fetchall()
 
             if not rows:
-                dispatcher.utter_message(text="Không tìm thấy đơn bảo trì nào với điều kiện này.")
+                dispatcher.utter_message(
+                    text="Không tìm thấy đơn bảo trì nào với điều kiện này.")
                 return []
 
             lines = []
@@ -74,7 +77,11 @@ class ActionCheckMaintenanceStatus(Action):
             dispatcher.utter_message(text=f"Lỗi cơ sở dữ liệu: {err}")
             return []
         finally:
-            try: cursor.close()
-            except Exception: pass
-            try: conn.close()
-            except Exception: pass
+            try:
+                cursor.close()
+            except Exception:
+                pass
+            try:
+                conn.close()
+            except Exception:
+                pass
