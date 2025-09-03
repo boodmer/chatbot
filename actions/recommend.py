@@ -38,7 +38,7 @@ class ActionRecommendBicycle(Action):
                 ])
 
             dispatcher.utter_message(text=message)
-            return [{"event": "slot", "name": "recommended_products", "value": message}]
+            return []
         except Error as err:
             dispatcher.utter_message(text=f"Lỗi cơ sở dữ liệu: {err}")
             return []

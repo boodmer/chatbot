@@ -34,11 +34,6 @@ slots:
     mappings:
       - type: from_llm
 
-  recommended_products:
-    type: text
-    mappings:
-      - type: controlled
-
   maintenance_status:
     type: text
     influence_conversation: true

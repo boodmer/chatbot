@@ -101,7 +101,7 @@ class ActionCheckOrderStatus(Action):
 
             msg = "Các đơn hàng gần đây của bạn:\n" + "\n".join(blocks)
             dispatcher.utter_message(text=msg)
-            return [{"event": "slot", "name": "last_orders_overview", "value": msg}]
+            return []
 
         except Error as err:
             dispatcher.utter_message(text=f"Lỗi CSDL: {err}")

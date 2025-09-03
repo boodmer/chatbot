@@ -71,7 +71,7 @@ class ActionCheckMaintenanceStatus(Action):
             msg = "Tình trạng các đơn bảo trì gần đây:\n" + "\n".join(lines)
             dispatcher.utter_message(text=msg)
 
-            return [{"event": "slot", "name": "maintenance_status", "value": msg}]
+            return []
 
         except Error as err:
             dispatcher.utter_message(text=f"Lỗi cơ sở dữ liệu: {err}")
