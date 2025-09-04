@@ -7,7 +7,8 @@ This project uses **Rasa Pro**. Follow these steps to install it using **Python 
 ## ✅ Requirements
 
 - Python 3.10 or 3.11  
-- pip  
+- pip
+- pip3
 - [Rasa Pro license key →](https://rasa.com/rasa-pro-developer-edition-license-key-request/)
 
 ---
